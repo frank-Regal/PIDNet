@@ -62,6 +62,14 @@ def train(config, epoch, num_epoch, epoch_iters, base_lr,
                                   base_lr,
                                   num_iters,
                                   i_iter+cur_iters)
+        
+        current_step = global_steps + i_iter
+        writer.add_scalar('train/loss', loss.item(), current_step)
+        writer.add_scalar('train/accuracy', acc.item(), current_step)
+        writer.add_scalar('train/semantic_loss', loss_list[0].mean().item(), current_step)
+        writer.add_scalar('train/bce_loss', loss_list[1].mean().item(), current_step)
+        writer.add_scalar('train/learning_rate', lr, current_step)
+        writer.add_scalar('train/batch_time', batch_time.val, current_step)
 
         if i_iter % config.PRINT_FREQ == 0:
             msg = 'Epoch: [{}/{}] Iter:[{}/{}], Time: {:.2f}, ' \
@@ -71,8 +79,8 @@ def train(config, epoch, num_epoch, epoch_iters, base_lr,
                       ave_acc.average(), avg_sem_loss.average(), avg_bce_loss.average(),ave_loss.average()-avg_sem_loss.average()-avg_bce_loss.average())
             logging.info(msg)
 
-    writer.add_scalar('train_loss', ave_loss.average(), global_steps)
-    writer_dict['train_global_steps'] = global_steps + 1
+    # writer.add_scalar('train_loss', ave_loss.average(), global_steps)
+    writer_dict['train_global_steps'] = global_steps + epoch_iters
 
 def validate(config, testloader, model, writer_dict):
     model.eval()
