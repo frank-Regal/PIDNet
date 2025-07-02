@@ -19,7 +19,7 @@ from tensorboardX import SummaryWriter
 
 import _init_paths
 import models
-import datasets
+import dataset as pidnet_datasets
 from configs import config
 from configs import update_config
 from utils.criterion import CrossEntropy, OhemCrossEntropy, BondaryLoss
@@ -82,7 +82,7 @@ def main():
     batch_size = config.TRAIN.BATCH_SIZE_PER_GPU * len(gpus)
     # prepare data
     crop_size = (config.TRAIN.IMAGE_SIZE[1], config.TRAIN.IMAGE_SIZE[0])
-    train_dataset = eval('datasets.'+config.DATASET.DATASET)(
+    train_dataset = eval('pidnet_datasets.'+config.DATASET.DATASET)(
                         root=config.DATASET.ROOT,
                         list_path=config.DATASET.TRAIN_SET,
                         num_classes=config.DATASET.NUM_CLASSES,
@@ -103,7 +103,7 @@ def main():
 
 
     test_size = (config.TEST.IMAGE_SIZE[1], config.TEST.IMAGE_SIZE[0])
-    test_dataset = eval('datasets.'+config.DATASET.DATASET)(
+    test_dataset = eval('pidnet_datasets.'+config.DATASET.DATASET)(
                         root=config.DATASET.ROOT,
                         list_path=config.DATASET.TEST_SET,
                         num_classes=config.DATASET.NUM_CLASSES,

@@ -6,12 +6,12 @@ import numpy as np
 import random
 
 from torch.nn import functional as F
-from torch.utils import data
+from torch.utils import data as torch_data
 
 y_k_size = 6
 x_k_size = 6
 
-class BaseDataset(data.Dataset):
+class BaseDataset(torch_data.Dataset):
     def __init__(self,
                  ignore_label=255,
                  base_size=2048,

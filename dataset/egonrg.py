@@ -10,7 +10,7 @@ import numpy as np
 from PIL import Image
 
 import torch
-from thirdparty.PIDNet.datasets.base_dataset import BaseDataset
+from thirdparty.PIDNet.dataset.base_dataset import BaseDataset
 
 class EgoNRGDataset(BaseDataset):
     def __init__(self, 
